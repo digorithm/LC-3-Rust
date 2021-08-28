@@ -1,4 +1,3 @@
-const NUM_REGISTERS: usize = 10;
 const PC_START: u16 = 0x3000;
 
 // LC-3 has 10 registers -- 8 general purpose registers,

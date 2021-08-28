@@ -1,7 +1,6 @@
 // Opcodes are fundamental operations to the CPU, LC-3 only has 16 opcodes.
 // Each instruction is 16 bits long, with first 4 bits storing the Opcode,
 // the rest is reserved for the parameter.
-use super::register::Registers;
 use super::vm::VM;
 
 use std::io;
@@ -32,17 +31,17 @@ pub enum OpCode {
 // TRAP Codes
 pub enum TrapCode {
     /// get character from keyboard
-    Getc = 0x20, /* get character from keyboard */
+    Getc = 0x20,
     /// output a character
-    Out = 0x21, /* output a character */
+    Out = 0x21,
     /// output a word string
-    Puts = 0x22, /* output a word string */
+    Puts = 0x22,
     /// input a string
-    In = 0x23, /* input a string */
+    In = 0x23,
     /// output a byte string
-    Putsp = 0x24, /* output a byte string */
+    Putsp = 0x24,
     /// halt the program
-    Halt = 0x25, /* halt the program */
+    Halt = 0x25,
 }
 
 pub fn execute_instruction(instr: u16, vm: &mut VM) {
@@ -95,11 +94,11 @@ pub fn get_op_code(instruction: &u16) -> Option<OpCode> {
     }
 }
 
-/// - ADD takes two values and stores them in a register.
-/// - In register mode, the second value to add is found in a register.
-/// - In immediate mode, the second value is embedded in the right-most 5 bits of the instruction.
-/// - Values which are shorter than 16 bits need to be sign extended.
-/// - Any time an instruction modifies a register, the condition flags need to be updated
+/// ADD takes two values and stores them in a register.
+/// In register mode, the second value to add is found in a register.
+/// In immediate mode, the second value is embedded in the right-most 5 bits of the instruction.
+/// Values which are shorter than 16 bits need to be sign extended.
+/// Any time an instruction modifies a register, the condition flags need to be updated
 /// If bit [5] is 0, the second source operand is obtained from SR2.
 /// If bit [5] is 1, the second source operand is obtained by sign-extending the imm5 field to 16 bits.
 /// In both cases, the second source operand is added to the contents of SR1 and the result stored in DR.
