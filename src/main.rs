@@ -21,18 +21,6 @@ struct Cli {
 }
 
 fn main() {
-    // Some tricks to make the VM's terminal be interactive
-    let stdin = 0;
-    let termios = termios::Termios::from_fd(stdin).unwrap();
-
-    // make a mutable copy of termios
-    // that we will modify
-    let mut new_termios = termios.clone();
-    new_termios.c_iflag &= IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON;
-    new_termios.c_lflag &= !(ICANON | ECHO); // no echo and canonical mode
-
-    tcsetattr(stdin, TCSANOW, &mut new_termios).unwrap();
-
     // Actual VM logic code
     let mut vm = VM::new();
 
@@ -54,7 +42,7 @@ fn main() {
             }
             Err(e) => {
                 if e.kind() == std::io::ErrorKind::UnexpectedEof {
-                    println!("OK")
+                    println!("OK, EOF reached");
                 } else {
                     println!("failed: {}", e);
                 }
@@ -63,9 +51,6 @@ fn main() {
         }
     }
 
+    println!("Loaded program in memory");
     hardware::execute_program(&mut vm);
-
-    // reset the stdin to
-    // original termios data
-    tcsetattr(stdin, TCSANOW, &termios).unwrap();
 }

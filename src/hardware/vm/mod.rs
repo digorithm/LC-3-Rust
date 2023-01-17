@@ -37,6 +37,7 @@ impl VM {
     }
 
     pub fn write_memory(&mut self, address: usize, value: u16) {
+        //println!("PC: {:#06x} Writing {:#06x} to {:#06x}", self.registers.pc, value, address);
         self.memory[address] = value;
     }
 }
