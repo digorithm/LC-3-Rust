@@ -547,7 +547,7 @@ pub fn trap(instruction: u16, vm: &mut VM) {
         0x25 => {
             println!("\n===\nHALT detected");
             io::stdout().flush().expect("failed to flush");
-            process::exit(1);
+            process::exit(0);
         }
         _ => {
             process::exit(1);
