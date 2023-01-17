@@ -255,7 +255,7 @@ pub fn br(instruction: u16, vm: &mut VM) {
     // so we're taking the `001`, xor `010`, xor `100` that's stored in the condition register
     // and `&`ing it to the `001`, or `010`, or `100` coming from the instruction,
     // note that it can be `110`, `111` or any combination.
-    if cond_flag & vm.registers.cond != 0 {
+    if cond_flag & vm.registers.cond != 0 || cond_flag == 0 {
         let val: u32 = vm.registers.pc as u32 + pc_offset as u32;
         vm.registers.pc = val as u16;
     }

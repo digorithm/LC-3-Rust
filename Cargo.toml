@@ -1,6 +1,6 @@
 [package]
 name = "LC-3"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Rodrigo Araujo <rod.dearaujo@gmail.com>", "Alex Procelewski <alexprocelewski@gmail.com>"]
 edition = "2018"
 
