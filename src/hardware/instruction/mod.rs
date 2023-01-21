@@ -496,7 +496,7 @@ pub fn trap(instruction: u16, vm: &mut VM) {
         0x20 => {
             // Get character
             let mut buffer = [0; 1];
-            std::io::stdin().read_exact(&mut buffer).unwrap();
+            std::io::stdin().read_exact(&mut buffer).unwrap_or(());
             vm.registers.r0 = buffer[0] as u16;
         }
         0x21 => {
