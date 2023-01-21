@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
         }
 
         if (strstr(linelower, ".orig") != NULL) {
-            char *fileName = malloc(10);
+            char *fileName = malloc(1000);
             sprintf(fileName, "noonewouldcomeupwiththisname%d.asm", fileCount);
             fp = fopen(fileName, "w");
             fileCount++;

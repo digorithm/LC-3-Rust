@@ -29,8 +29,6 @@ fn main() {
             vm.write_memory(address as usize, value);
             address += 1;
         }
-
-        println!("Loaded file {} into memory", path.display());
     }
 
 
