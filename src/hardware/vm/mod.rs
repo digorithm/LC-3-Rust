@@ -27,7 +27,12 @@ impl VM {
 
     fn handle_keyboard(&mut self) {
         let mut buffer = [0; 1];
-        std::io::stdin().read_exact(&mut buffer).unwrap();
+        std::io::stdin().read_exact(&mut buffer).unwrap_or_else(|_| {
+            eprintln!("Error reading from keyboard");
+            eprintln!("PC: {:#06x}", self.registers.pc);
+            eprintln!("Instruction: {:#06x}", self.memory[self.registers.pc as usize]);
+            std::process::exit(122);
+        });
         if buffer[0] != 0 {
             self.write_memory(MemoryMappedReg::Kbsr as usize, 1 << 15);
             self.write_memory(MemoryMappedReg::Kbdr as usize, buffer[0] as u16);

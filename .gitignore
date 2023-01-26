@@ -1,1 +1,7 @@
 /target
+
+*.asm
+*.obj
+*.sym
+
+lc3as
