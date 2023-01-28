@@ -19,7 +19,7 @@ impl VM {
     }
 
     fn safe_fail(&self, error_msg: &str, error_code: i32) {
-        eprintln!(error_msg);
+        eprintln!("{}", error_msg);
         eprintln!("PC: {:#06x}", self.registers.pc);
         eprintln!("Instruction: {:#06x}", self.memory[self.registers.pc as usize]);
         std::process::exit(error_code);
