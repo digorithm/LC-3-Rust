@@ -18,20 +18,29 @@ impl VM {
         }
     }
 
+    fn safe_fail(&self, error_msg: &str, error_code: i32) {
+        eprintln!(error_msg);
+        eprintln!("PC: {:#06x}", self.registers.pc);
+        eprintln!("Instruction: {:#06x}", self.memory[self.registers.pc as usize]);
+        std::process::exit(error_code);
+    }
+
     pub fn read_memory(&mut self, address: u16) -> u16 {
         if address == MemoryMappedReg::Kbsr as u16 {
             self.handle_keyboard();
         }
+
+        if address == MEMORY_SIZE as u16 {
+            self.safe_fail("Error: Trying to load memory outside the available range", 139);
+        }
+
         self.memory[address as usize]
     }
 
     fn handle_keyboard(&mut self) {
         let mut buffer = [0; 1];
         std::io::stdin().read_exact(&mut buffer).unwrap_or_else(|_| {
-            eprintln!("Error reading from keyboard");
-            eprintln!("PC: {:#06x}", self.registers.pc);
-            eprintln!("Instruction: {:#06x}", self.memory[self.registers.pc as usize]);
-            std::process::exit(122);
+            self.safe_fail("Error: Reading from keyboard without any available input", 122);
         });
         if buffer[0] != 0 {
             self.write_memory(MemoryMappedReg::Kbsr as usize, 1 << 15);
