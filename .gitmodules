@@ -1,0 +1,3 @@
+[submodule "LC-3-Parser"]
+	path = LC-3-Parser
+	url = git@github.com:Stylo2k/LC-3-Parser.git
